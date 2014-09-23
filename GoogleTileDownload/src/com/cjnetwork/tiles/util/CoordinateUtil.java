@@ -15,9 +15,9 @@ import com.jhlabs.map.proj.ProjectionFactory;
  * <p>despription: lnglat 和tile 坐标系转换工具</p>
  */
 public class CoordinateUtil {
-	static{
-		DOMConfigurator.configure("D:/Workspace_sts3.5/GoogleTileDownload/src/log4j.xml");
-	}
+//	static{
+//		DOMConfigurator.configure("D:/Workspace_sts3.5/GoogleTileDownload/src/log4j.xml");
+//	}
 	private static final Logger logger = Logger.getLogger(CoordinateUtil.class);
 	private static Projection proj = ProjectionFactory.getNamedPROJ4CoordinateSystem("epsg:900913");
 	public static double[] cast(double lon, double lat) {

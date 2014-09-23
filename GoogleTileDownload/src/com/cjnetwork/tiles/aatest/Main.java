@@ -23,7 +23,7 @@ public class Main {
 	private static final Logger logger = Logger.getLogger(Main.class);
 	private static final int MODE_FILE = 0;
 	private static final int MODE_PIC = 1;
-	private static int mode = MODE_FILE;
+	private static int mode = MODE_FILE;	// 默认为保存文件
 	static String path = "http://mt1.google.cn/vt/lyrs=m@216000000&hl=zh-CN&gl=CN&src=app&s=Galileo&x=";
 	static ExecutorService pool;
 	static String downloadDir; 			// 下载的瓦片的存放目录
@@ -291,7 +291,8 @@ public class Main {
 			for (Tile t : tiles) {
 				try {
 					z = entry.getKey();
-					String storePath = downloadDir + "/tiles/" + z + "/" + t.getX() + ".txt";
+//					String storePath = downloadDir + "/tiles/" + z + "/" + t.getX() + ".txt";
+					String storePath = downloadDir + "/"+z + "/" + t.getX() + ".txt";
 					file = new File(storePath);
 					if (!file.exists()) {
 						File parentDir = new File(file.getParent());

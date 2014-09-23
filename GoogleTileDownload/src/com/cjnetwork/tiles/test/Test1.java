@@ -1,13 +1,9 @@
 package com.cjnetwork.tiles.test;
 
 import java.awt.geom.Point2D;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
-import com.cjnetwork.tiles.model.Tile;
+import com.cjnetwork.tiles.util.ConfigUtil;
 import com.cjnetwork.tiles.util.CoordinateConversion;
 import com.cjnetwork.tiles.util.UrlFileHandler;
 import com.jhlabs.map.proj.Projection;
@@ -46,12 +42,16 @@ public class Test1 {
 //		System.out.println(Arrays.toString(cast(120.15434, 30.27491)));
 	}
 	
-	// 根据某个目录下的url文件下载瓦片
+	// 1.Main.main   下载所有文件
+	// 2.Test1.test2  根据某个目录下的url文件下载瓦片
 	@Test
 	public void test2() {
-		String path="D:/temp/work_release/tiles/16";
-		UrlFileHandler handler=new UrlFileHandler(path);
-		handler.execute();
+//		String path="D:/temp/work_release/tiles/16";
+		
+		String path=ConfigUtil.get("downloadDir");
+		path=path+"/12";
+		System.out.println("path="+path);
+		new UrlFileHandler(path).execute();
 	}
 	
 }

@@ -15,12 +15,13 @@ public class UrlFileHandler {
 	private Integer success=0,fail=0,all=0;
 	private String path;
 	private static final Logger logger = Logger.getLogger(UrlFileHandler.class);
-	private static final String downloadDir = "D:/temp/work_release";
+	private static String downloadDir = "D:/temp/work_release";
 
 	public UrlFileHandler() {
 	}
 	public UrlFileHandler(String path) {
 		this.path=path;
+		downloadDir=ConfigUtil.get("downloadDir");
 	}
 
 	public void getAllUrlFile(String rootPath, List<File> fileList) {
@@ -76,7 +77,8 @@ public class UrlFileHandler {
 
 	public void download(int x, int y, int z) {
 		String url = "http://mt1.google.cn/vt/lyrs=m@216000000&hl=zh-CN&gl=CN&src=app&s=Galileo&x=" + x + "&y=" + y + "&z=" + z;
-		String target = downloadDir + "/tiles/" + z + "/" + x + "/" + y + ".png";
+//		String target = downloadDir + "/tiles/" + z + "/" + x + "/" + y + ".png";
+		String target = downloadDir + "/" + z + "/" + x + "/" + y + ".png";
 		DownloadUtil.setProxy(false);
 		try {
 			DownloadUtil.download(url, target, true);
