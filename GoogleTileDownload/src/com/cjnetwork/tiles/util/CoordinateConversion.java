@@ -5,8 +5,6 @@ import java.util.Map;
 
 /**
  * 这是IBM转换的一个类，不太好用
- * @author zxf
- *
  */
 public class CoordinateConversion {
 
