@@ -26,10 +26,10 @@ public class FileMain {
 	private static int mode = MODE_FILE;
 	static String path = "http://mt1.google.cn/vt/lyrs=m@216000000&hl=zh-CN&gl=CN&src=app&s=Galileo&x=";
 	static ExecutorService pool;
-	static String downloadDir; // 下载的瓦片的存放目录
-	static int[] zoom; // 放大倍数
-	static Lnglat leftTopLnglat; // 左上角经纬度
-	static Lnglat rightBottomLnglat; // 右下角经纬度
+	static String downloadDir; 			// 下载的瓦片的存放目录
+	static int[] zoom; 					// 放大倍数
+	static Lnglat leftTopLnglat; 		// 左上角经纬度
+	static Lnglat rightBottomLnglat; 	// 右下角经纬度
 	static int roundCount;
 	static int totalSize;
 	static int currentIndex = 0;
@@ -53,7 +53,7 @@ public class FileMain {
 		}
 		return currentIndex;
 	}
-
+	
 	public static void addFailedCount() {
 		synchronized (lockFailCount.writeLock()) {
 			try {
