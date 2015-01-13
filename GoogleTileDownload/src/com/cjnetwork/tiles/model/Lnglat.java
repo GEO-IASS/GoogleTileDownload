@@ -1,7 +1,6 @@
 package com.cjnetwork.tiles.model;
 
 public class Lnglat {
-
 	double lng;
 	double lat;
 	public double getLng() {
