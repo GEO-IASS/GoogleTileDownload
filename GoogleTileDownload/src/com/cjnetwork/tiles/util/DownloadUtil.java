@@ -19,9 +19,7 @@ public class DownloadUtil {
 	private static int proxyPort = 80;	
 
 	/**
-	 * 
-	 * 功能描述：<br>
-	 * 
+	 * 功能描述：
 	 * @param url       需要下载的地址
 	 * @param savepath  保存文件路径，全路径包括扩展名
 	 * @param isOveride 存在的文件是否覆盖   true覆盖   false不覆盖
@@ -43,7 +41,7 @@ public class DownloadUtil {
 				return;
 			}
 		}
-//		logger.debug("下载:" + url + "                   " + "存储:" + savepath);
+		logger.debug("下载:" + url + "                   " + "存储:" + savepath);
 		
 		URL u = new URL(url);
 		URLConnection connection = null;

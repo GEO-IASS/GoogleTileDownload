@@ -11,11 +11,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class UrlFileHandler {
+	private static final Logger logger = Logger.getLogger(UrlFileHandler.class);
 	private List<File> fileList=new ArrayList<File>();
 	private Integer success=0,fail=0,all=0;
 	private String path;
-	private static final Logger logger = Logger.getLogger(UrlFileHandler.class);
-	private static String downloadDir = "D:/temp/work_release";
+	private static String downloadDir;
 
 	public UrlFileHandler() {
 	}
@@ -85,7 +85,7 @@ public class UrlFileHandler {
 			logger.debug("(" + x + "," + y + "," + z + ")下载成功!");
 			success++;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 			fail++;
 			logger.error("(" + x + "," + y + "," + z + ")下载失败!");
 		}

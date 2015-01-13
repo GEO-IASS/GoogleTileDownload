@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import org.apache.log4j.Logger;
+
 import com.cjnetwork.tiles.model.Lnglat;
 import com.cjnetwork.tiles.model.Tile;
 import com.cjnetwork.tiles.util.ConfigUtil;
@@ -21,9 +23,12 @@ import com.cjnetwork.tiles.util.DownloadUtil;
 
 public class FileMain {
 	private static final Logger logger = Logger.getLogger(FileMain.class);
+	/** 下载配置文件 */
 	private static final int MODE_FILE = 0;
+	/** 下载图片 */
 	private static final int MODE_PIC = 1;
 	private static int mode = MODE_FILE;
+//	private static int mode = MODE_PIC;
 	static String path = "http://mt1.google.cn/vt/lyrs=m@216000000&hl=zh-CN&gl=CN&src=app&s=Galileo&x=";
 	static ExecutorService pool;
 	static String downloadDir; 			// 下载的瓦片的存放目录
@@ -36,7 +41,7 @@ public class FileMain {
 	static int failedCount = 0;
 	static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 	static ReentrantReadWriteLock lockFailCount = new ReentrantReadWriteLock();
-
+	
 	/**
 	 * 功能描述：<br>
 	 * 当前处理索引加1
@@ -78,6 +83,10 @@ public class FileMain {
 		return count;
 	}
 
+	/**
+	 * 下载切片执行的主方法
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		init();
 		printCalculatSize(zoom, leftTopLnglat, rightBottomLnglat);
@@ -128,8 +137,8 @@ public class FileMain {
 
 	private static void printCalculatSize(int[] zoom, Lnglat leftTopLnglat, Lnglat rightBottomLnglat) {
 		int size = calculateDownloadSize(zoom, leftTopLnglat, rightBottomLnglat);
-		System.out.println("下载tile数量:" + size);
-		System.out.println("下载大小:" + size * 22 + "k, " + size * 22 / 1024 + "M, " + size * 22 / 1024 / 1024 + "G");
+		logger.info("下载tile数量:" + size);
+		logger.info("下载大小:" + size * 22 + "k, " + size * 22 / 1024 + "M, " + size * 22 / 1024 / 1024 + "G");
 	}
 
 	private static int calculateDownloadSize(int[] zoom, Lnglat leftTopLnglat, Lnglat rightBottomLnglat) {
@@ -248,8 +257,7 @@ public class FileMain {
 				list.add(t);
 			} catch (Exception e) {
 				FileMain.addFailedCount();
-				e.printStackTrace();
-				logger.error("下载失败:x(" + t.getX() + "),y(" + t.getY() + "),z(" + t.getZoom() + ")");
+				logger.error("下载失败:x(" + t.getX() + "),y(" + t.getY() + "),z(" + t.getZoom() + ")", e);
 			}
 
 		}
@@ -273,7 +281,11 @@ public class FileMain {
 			for (Tile t : tiles) {
 				try {
 					z = entry.getKey();
-					String storePath = downloadDir + "/tiles/" + z + "/" + t.getX() + ".txt";
+//					String storePath = downloadDir + "/tiles/" + z + "/" + t.getX() + ".txt";
+					
+					// eg.zsbike/12
+					String storePath = downloadDir + "/" + z + "/" + t.getX() + ".txt";
+					
 					file = new File(storePath);
 					if (!file.exists()) {
 						File parentDir = new File(file.getParent());
@@ -296,6 +308,25 @@ public class FileMain {
 				}
 			}
 		}
+	}
+	
+	private static Map<Integer, List<String>> convertTileList(List<Tile> tmpTileList) {
+		Map<Integer, List<String>> map = new HashMap<Integer, List<String>>();
+		List<String> list = null;
+		Integer x, z;
+		for (Tile t : tmpTileList) {
+			x = t.getX();
+			z = t.getZoom();
+			String line = "x=" + x + ",y=" + t.getY() + ",z=" + z;
+			if (!map.containsKey(x)) {
+				list = new ArrayList<String>();
+				list.add(line);
+			} else {
+				list = map.get(x);
+			}
+			list.add(line);
+		}
+		return map;
 	}
 
 }
